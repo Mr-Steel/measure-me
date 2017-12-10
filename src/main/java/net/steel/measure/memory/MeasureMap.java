@@ -1,4 +1,4 @@
-package net.steel.measure;
+package net.steel.measure.memory;
 
 import org.eclipse.collections.impl.map.mutable.UnifiedMap;
 import org.eclipse.collections.impl.map.mutable.primitive.ByteObjectHashMap;
@@ -9,18 +9,19 @@ import java.util.Map;
 
 public class MeasureMap {
 
-    private static int capacity = 10;
+    private static int initialCapacity = 16;
+    private static int targetCapacity = 128;
 
     private static int multi = 1;
 
     public static void main(String... args) {
         MemoryMeter meter = new MemoryMeter();
-        Map<Integer, Integer> hashMap = new HashMap(capacity);
-        Map<Integer, Integer> unifiedMap = new UnifiedMap(capacity);
-        Map<Byte, Integer> hashMapByte = new HashMap<>(capacity);
-        Map<Byte, Integer> unifiedMapByte = new UnifiedMap(capacity);
-        ByteObjectHashMap<Integer> byteObjectHashMap = new ByteObjectHashMap(capacity);
-        for (int i = 0; i < capacity; i++) {
+        Map<Integer, Integer> hashMap = new HashMap(initialCapacity);
+        Map<Integer, Integer> unifiedMap = new UnifiedMap(initialCapacity);
+        Map<Byte, Integer> hashMapByte = new HashMap<>(initialCapacity);
+        Map<Byte, Integer> unifiedMapByte = new UnifiedMap(initialCapacity);
+        ByteObjectHashMap<Integer> byteObjectHashMap = new ByteObjectHashMap(initialCapacity);
+        for (int i = 0; i < targetCapacity; i++) {
             hashMap.put(i*multi, i+500);
             unifiedMap.put(i*multi, i+500);
             hashMapByte.put((byte)i, i+500);
@@ -28,7 +29,7 @@ public class MeasureMap {
             byteObjectHashMap.put((byte) i, i+500);
         }
 
-        for (int i = 0; i < capacity; i++) {
+        for (int i = 0; i < targetCapacity; i++) {
             hashMap.remove(i);
             unifiedMap.remove(i);
             hashMapByte.remove((byte)i);
